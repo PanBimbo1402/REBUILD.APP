@@ -7,6 +7,7 @@ window.REBUILD_DATA = {
     {id:'plan',icon:'▦',label:'Plan'}
   ],
   onboarding:[
+    {id:'language',q:'What language would you like to use?',type:'choice',options:[['en','English'],['es','Español']]},
     {id:'mode',q:'Which REBUILD path fits you?',hint:'You can change this later.',type:'choice',options:[['core','Regular — I want to stay fit and keep it simple'],['pro','Pro — I train seriously and want deeper metrics']]},
     {id:'goal',q:'What is your main goal right now?',type:'choice',options:[['fatloss','Lose fat / get lean'],['muscle','Build muscle'],['hybrid','Become more athletic'],['run','Improve running'],['general','General fitness']]},
     {id:'age',q:'How old are you?',type:'number',unit:'years',placeholder:'e.g. 20',hint:'Used later for training and nutrition personalization.'},
@@ -20,7 +21,11 @@ window.REBUILD_DATA = {
     {id:'deadliftPR',q:'What is your best recent deadlift?',type:'number',unit:'lb',placeholder:'e.g. 225',hint:'Use a recent clean 1-rep max or best estimate. Leave blank if unknown.'},
     {id:'milePR',q:'What is your fastest recent mile?',type:'time',unit:'min:sec',placeholder:'e.g. 8:45',hint:'A recent best is enough. Leave blank if you do not know.'},
     {id:'equipment',q:'Where do you train most?',type:'choice',options:[['gym','Gym'],['home','Home gym'],['mixed','Both']]},
+    {id:'movementPriority',q:'What should movement prep help you most with?',type:'choice',options:[['running','Running performance'],['lifting','Lifting performance'],['athletic','Explosiveness / athleticism'],['mobility','General mobility']]},
+    {id:'mobilityNeeds',q:'Where do you most want better mobility or control?',type:'choice',options:[['ankles','Ankles / calves'],['hips','Hips'],['shoulders','Shoulders / upper back'],['full','Full body / not sure']]},
+    {id:'movementLimits',q:'Any current movement limitation that should affect exercise selection?',type:'choice',options:[['none','No current limitation'],['lower','Lower-body limitation'],['upper','Upper-body limitation'],['unsure','Not sure — keep it conservative']]},
     {id:'schedule',q:'Should REBUILD plan around work, school and other events?',type:'choice',options:[['yes','Yes — build around my life'],['no','No — I will manage timing myself']]},
+    {id:'lifeContext',q:'Tell REBUILD what a normal week in your life is like.',type:'text',placeholder:'Work, school, kids, commute, chores, groceries, family responsibilities...',hint:'This helps the future planner fit training around real life. You can edit it later in Plan.'},
     {id:'guidance',q:'How much guidance do you want?',type:'choice',options:[['simple','Just tell me what to do'],['teach','Teach me along the way'],['deep','Show me the details too']]}
   ],
   days:[
