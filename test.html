@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#090b0f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="REBUILD" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="assets/icon-192.png" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <title>REBUILD — Core 0.5 Draft</title>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <div class="brand-block">
+        <div class="brand">REBUILD</div>
+        <div class="brand-sub">CORE // 0.5</div>
+      </div>
+      <nav id="sidebarNav" class="nav-list"></nav>
+      <div class="side-footer">
+        <span class="status-dot"></span> Local prototype
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">REBUILD CORE</div>
+          <h1 id="pageTitle">Today</h1>
+        </div>
+        <div class="top-actions">
+          <button class="ghost-btn" id="resetDemoBtn" type="button">Reset demo</button>
+          <div class="save-pill">Saved locally</div>
+        </div>
+      </header>
+
+      <section id="app" aria-live="polite"></section>
+    </main>
+  </div>
+
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation"></nav>
+
+  <script src="js/data.js"></script>
+  <script>localStorage.removeItem("rebuild-core-0-5");</script>
+  <script src="js/app.js"></script>
+
+  <script>
+  (async()=>{
+    const wait=(ms=40)=>new Promise(r=>setTimeout(r,ms));
+    const results=[]; const ok=(name,cond)=>results.push((cond?'PASS ':'FAIL ')+name);
+    await wait(80);
+    document.querySelector('#demoSkip')?.click(); await wait();
+    ok('onboarding skip',!document.querySelector('.onboarding-overlay'));
+    ok('five nav items',document.querySelectorAll('#sidebarNav [data-nav]').length===5);
+    ok('timeline present',document.querySelectorAll('.timeline-item').length>=7);
+    document.querySelector('[data-open-training="Upper Body A"]')?.click(); await wait();
+    ok('timeline opens training',document.querySelector('.exercise-log-list')!==null);
+    ok('timer controls',document.querySelector('[data-rest-stop]')&&document.querySelector('[data-rest-reset]'));
+    const wt=document.querySelector('[data-log-field="weight"]'); if(wt){wt.value='140';wt.dispatchEvent(new Event('input',{bubbles:true}));}
+    ok('workout weight persists in local state',localStorage.getItem('rebuild-core-0-5')?.includes('140'));
+    document.querySelector('[data-training-tab="cardio"]')?.click(); await wait();
+    ok('cardio tab',document.querySelector('.cardio-card')!==null);
+    document.querySelector('[data-training-tab="running"]')?.click(); await wait();
+    ok('running tab',document.querySelector('#saveRunBtn')!==null);
+    document.querySelector('[data-nav="nutrition"]')?.click(); await wait();
+    ok('nutrition view',document.querySelectorAll('.macro-ring').length===3);
+    document.querySelector('#addFoodBtn')?.click(); await wait();
+    ok('food modal',document.querySelectorAll('[data-food-method]').length===4);
+    document.querySelector('[data-food-method="estimate"]')?.click(); await wait();
+    const preset=document.querySelector('#estimatePreset'); if(preset){preset.value='Banana|107|1|27|0';preset.dispatchEvent(new Event('change'));document.querySelector('#saveFoodBtn')?.click();}
+    await wait(); ok('food saved',document.body.textContent.includes('Banana'));
+    document.querySelector('[data-nav="progress"]')?.click(); await wait();
+    ok('sleep log control',document.querySelector('#saveSleepBtn')!==null);
+    const sleep=document.querySelector('#sleepInput'); if(sleep){sleep.value='7.5';document.querySelector('#saveSleepBtn').click();} await wait();
+    ok('sleep value shown',document.body.textContent.includes('7.5 h'));
+    document.querySelector('[data-nav="plan"]')?.click(); await wait();
+    ok('plan editor',document.querySelector('#addEventBtn')!==null);
+    const failed=results.filter(x=>x.startsWith('FAIL')).length;
+    document.body.innerHTML='<pre id="RESULTS">'+results.join('\n')+'\nTOTAL '+results.length+' / FAIL '+failed+'</pre>';
+  })();
+  </script>
+</body>
+</html>
