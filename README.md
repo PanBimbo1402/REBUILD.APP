@@ -1,28 +1,34 @@
-# REBUILD 0.8 — Clean Rebuild
+# IXHUA 0.1.3 — Owner Acceptance
 
-Built fresh from the known-working 0.6.1 foundation. No 0.7 application code was used as the base.
+This is the first separated **IXHUA 0.1.3** owner-test build. It is intentionally based on the last stable Today/navigation architecture, then ports the newer IXHUA training/planner improvements on top instead of continuing the buggy Today branch.
 
-## Included
-- Stable, explicit Today / Training / Nutrition / Progress / Plan routing.
-- Today-only sleep entry; Progress analyzes sleep; Training does not duplicate sleep logging.
-- Strength, Cardio, Running, Mobility/Plyometric training tabs.
-- No-run gate: no run form on days without a scheduled run; next scheduled run is shown.
-- Strength rest timer Start/Resume, Stop/Pause, Reset behavior from the stable base.
-- PR-anchored suggested starting weights for related strength exercises; no weight suggestions for mobility/plyometrics.
-- Exercise thumbnails, movement popup, muscle targeting, cues and technique links.
-- Separate Mobility Prep and Plyometric Power blocks on Today for lower/run sessions.
-- Nutrition daily macros, food logging, gram-based meal prep, three meal rotations, and optional food-preference questionnaire.
-- Progress: bodyweight trends, sleep trends, PR baselines, and week-over-week working-weight percentage indicators.
-- Plan: program calendar, editable life context, future work shifts without a three-week limit, and life events.
-- English/Spanish selection and UI translation layer; EN/ES switch.
-- Adult presentation foundation for age 45+: purple accent, larger controls/text, REBUILD ADULT identity.
+## Start on iPhone
 
-## QA performed before packaging
-- `node --check` passed for `js/app.js` and `js/data.js`.
-- 22/22 structural/regression assertions passed.
-- Runtime harness exercised all five section renderers and verified Progress/Plan isolation, Nutrition meal prep, no-run gating, sleep-entry placement, life planning, and repeated routing.
-- Navigation stress test cycled all five sections 50 times and ended on the correct Progress renderer.
-- Major view definitions verified unique: one renderer each for Today, Training, Nutrition, Progress, and Plan.
-- ZIP integrity tested after packaging.
+1. Extract the ZIP on the Windows PC.
+2. Double-click **START-IXHUA.bat**.
+3. Keep that window open.
+4. Put the iPhone on the same trusted Wi-Fi.
+5. Scan the QR with iPhone Camera and open it in Safari.
 
-Automated Chromium was attempted, but this environment's browser policy blocks local/file/data pages. Therefore real-device visual QA remains the final check; browser visual automation is not claimed.
+Node.js 22+ is required. No npm install is required to run the owner preview.
+
+## What IXHUA 0.1 locks in
+
+- **Today is Today:** returning from Training, Nutrition, Progress or Plan always reconstructs the actual Today surface instead of leaving stale tab content behind.
+- **Life + training timeline:** Today contains the chronological **Hour by hour** schedule, including saved work/life events and prescribed training.
+- **One 21-day horizontal date rail:** Today, Training and Plan use the same left/right swipe interaction.
+- **Selected-day Training:** Training shows only the selected day instead of a multiweek feed.
+- **Mobile Plan:** on iPhone, Plan uses the horizontal rail + one selected-day vertical agenda; the desktop-style week grid is not the phone default.
+- **Hybrid is actually concurrent:** Running and Strength are both core. Key/high-demand sessions are distributed instead of stacking two strength sessions or two core heavy sessions on one day.
+- **Deeper experienced lifting:** “Some experience” retains a 6–7 movement Upper/Lower A/B structure with meaningful working-set volume instead of collapsing to beginner 2-set sessions.
+- **Support work stays attached:** Mobility prep, quality-first plyometrics when readiness allows, and easy Zone 2 finishers can support the main session without stealing a core training day. Their Training tabs open each block separately.
+- **Human dates:** normal athlete surfaces use labels such as `TUESDAY, SEP 15`, not raw ISO dates.
+- **Real workout flow:** strength set logging, workout clock, automatic rest timer, pause/resume, ±15 seconds and reset remain functional. Running retains its separate timed prescription/session flow.
+
+Local data remains on the phone/browser through the legacy-compatible `rebuild-core-0-9` storage key so existing owner-test data can migrate rather than disappear.
+
+## Verification
+
+Read **IXHUA-0.1-VERIFICATION.md** for the exact automated and browser acceptance evidence. The build is not being represented as the full production/native Release Candidate: Apple Health/Watch, native GPS/background execution, cloud sync, full AI actions and other external/native boundaries remain separate work.
+
+Physical iPhone use is still the owner acceptance gate. The goal of 0.1 is to establish a stable IXHUA base we can continue from without breaking Today again.
